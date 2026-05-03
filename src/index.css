@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #020408;
+  color: #f0f4ff;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar         { width: 5px; }
+::-webkit-scrollbar-track   { background: #020408; }
+::-webkit-scrollbar-thumb   { background: rgba(124,58,237,0.6); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
+
+/* ── Forms ─────────────────────────────────────────────── */
+input, textarea, button, select { font-family: inherit; }
+input::placeholder, textarea::placeholder { color: #4a5568; }
+
+/* ── Focus ring ────────────────────────────────────────── */
+:focus-visible { outline: 2px solid rgba(0,212,255,0.5); outline-offset: 2px; }
+
+/* ── Keyframes ─────────────────────────────────────────── */
+@keyframes spin      { to { transform: rotate(360deg); } }
+@keyframes fadeIn    { from { opacity: 0; } to { opacity: 1; } }
+@keyframes popIn     { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes glow-pulse { 0%,100% { box-shadow: 0 0 20px rgba(0,212,255,0.1); } 50% { box-shadow: 0 0 40px rgba(0,212,255,0.25); } }
+@keyframes fadeUp    { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn   { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes shimmer   { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+@keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+/* ── Utility classes ────────────────────────────────────── */
+.fade-in  { animation: fadeIn  0.4s ease both; }
+.fade-up  { animation: fadeUp  0.5s ease both; }
+.slide-in { animation: slideIn 0.3s ease both; }
+
+/* ── Glass card ─────────────────────────────────────────── */
+.glass {
+  background: rgba(6,14,30,0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0,212,255,0.1);
+  border-radius: 16px;
+}
+
+/* ── Gradient text ──────────────────────────────────────── */
+.grad-text {
+  background: linear-gradient(135deg, #00d4ff, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Skeleton shimmer ───────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* ── Pulsing status dot ─────────────────────────────────── */
+.pulse { animation: pulse-dot 2s ease-in-out infinite; }
+
+/* ── Cosmic Background ──────────────────────────────────── */
+@keyframes nebulaDrift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-2%, 2%) scale(1.1); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.cosmic-bg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #020408; z-index: -1; overflow: hidden;
+}
+
+.nebula-glow {
+  position: absolute; width: 100%; height: 100%;
+  background: radial-gradient(circle at 70% 20%, rgba(124,58,237,0.06) 0%, transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(6,182,212,0.06) 0%, transparent 50%);
+  filter: blur(80px);
+  animation: nebulaDrift 20s infinite ease-in-out;
+}
+
+.star {
+  position: absolute; background: white; border-radius: 50%;
+  animation: starTwinkle var(--duration) infinite ease-in-out;
+}
