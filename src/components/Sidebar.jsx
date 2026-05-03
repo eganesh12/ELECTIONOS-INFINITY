@@ -45,7 +45,9 @@ export default function Sidebar() {
         .signout-btn:hover { background: rgba(239,68,68,0.1) !important; color: #ef4444 !important; }
       `}</style>
 
-      <aside style={{
+      <aside
+        aria-label="Main navigation"
+        style={{
         width: 230, minHeight: '100vh',
         background: 'rgba(4,10,22,0.98)',
         backdropFilter: 'blur(30px)',
@@ -72,7 +74,7 @@ export default function Sidebar() {
         </div>
 
         {/* ── Navigation ── */}
-        <nav style={{ flex: 1, padding: '16px 10px' }}>
+        <nav aria-label="Site navigation" style={{ flex: 1, padding: '16px 10px' }}>
           {LINKS.map(({ path, icon: Icon, label, accent }) => {
             const active = loc.pathname === path
             return (
@@ -82,6 +84,8 @@ export default function Sidebar() {
                 onClick={() => navigate(path)}
                 onMouseEnter={() => setHovered(path)}
                 onMouseLeave={() => setHovered(null)}
+                aria-label={label}
+                aria-current={active ? 'page' : undefined}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 12, width: '100%',
                   padding: '11px 14px', borderRadius: 12, border: 'none', cursor: 'pointer',
@@ -93,10 +97,10 @@ export default function Sidebar() {
                   position: 'relative'
                 }}
               >
-                <Icon size={18} strokeWidth={active ? 2.5 : 2} />
+                <Icon size={18} strokeWidth={active ? 2.5 : 2} aria-hidden="true" />
                 <span style={{ flex: 1 }}>{label}</span>
                 {active && (
-                  <div style={{ width: 4, height: 4, borderRadius: '50%', background: accent, boxShadow: `0 0 8px ${accent}` }} />
+                  <div style={{ width: 4, height: 4, borderRadius: '50%', background: accent, boxShadow: `0 0 8px ${accent}` }} aria-hidden="true" />
                 )}
               </button>
             )

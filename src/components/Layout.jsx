@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import Sidebar from './Sidebar'
 
 const CosmicBackground = () => {
-  const stars = useMemo(() => 
+  const stars = useMemo(() =>
     Array.from({ length: 100 }, (_, i) => ({
       id: i,
       top: `${Math.random() * 100}%`,
@@ -13,21 +13,21 @@ const CosmicBackground = () => {
     })), [])
 
   return (
-    <div className="cosmic-bg">
+    <div className="cosmic-bg" aria-hidden="true">
       <div className="nebula-glow"></div>
       {stars.map(star => (
-        <div 
-          key={star.id} 
-          className="star" 
-          style={{ 
-            top: star.top, 
-            left: star.left, 
-            width: star.size, 
-            height: star.size, 
+        <div
+          key={star.id}
+          className="star"
+          style={{
+            top: star.top,
+            left: star.left,
+            width: star.size,
+            height: star.size,
             '--duration': star.duration,
             animationDelay: star.delay,
             boxShadow: `0 0 10px rgba(255,255,255,0.4)`
-          }} 
+          }}
         />
       ))}
     </div>
@@ -39,15 +39,19 @@ export default function Layout({ children }) {
     <div style={{ display: 'flex', minHeight: '100vh', background: 'transparent', position: 'relative' }}>
       <CosmicBackground />
       <Sidebar />
-      <main style={{
-        flex: 1, marginLeft: 230,
-        padding: '32px 36px',
-        overflowY: 'auto',
-        minHeight: '100vh',
-        background: 'transparent',
-        position: 'relative',
-        zIndex: 1
-      }}>
+      <main
+        id="main-content"
+        tabIndex={-1}
+        style={{
+          flex: 1, marginLeft: 230,
+          padding: '32px 36px',
+          overflowY: 'auto',
+          minHeight: '100vh',
+          background: 'transparent',
+          position: 'relative',
+          zIndex: 1
+        }}
+      >
         {children}
       </main>
     </div>

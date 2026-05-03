@@ -101,7 +101,7 @@ export default function TutorPage() {
         </div>
 
         {/* Messages area */}
-        <div style={{ flex:1, overflowY:'auto', display:'flex', flexDirection:'column', gap:16, paddingRight:6, marginBottom:16 }}>
+        <div role="log" aria-live="polite" aria-label="Chat messages" style={{ flex:1, overflowY:'auto', display:'flex', flexDirection:'column', gap:16, paddingRight:6, marginBottom:16 }}>
           {messages.length === 0 && (
             <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', flex:1, gap:24, textAlign:'center' }}>
               <div style={{ width:80, height:80, borderRadius:'50%', background:'linear-gradient(135deg,rgba(124,58,237,0.15),rgba(0,212,255,0.15))', border:'1px solid rgba(0,212,255,0.2)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:36 }}>🧠</div>
@@ -140,6 +140,7 @@ export default function TutorPage() {
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             placeholder="Ask about elections, voting, democracy… (Enter to send)"
+            aria-label="Ask a question about elections or democracy"
             rows={1}
             style={{ flex:1, background:'none', border:'none', outline:'none', color:'#f0f4ff', fontSize:14, resize:'none', lineHeight:1.6, maxHeight:120, overflowY:'auto', paddingTop:2 }}
           />
@@ -147,6 +148,7 @@ export default function TutorPage() {
             className="send-btn"
             onClick={handleSend}
             disabled={!input.trim() || isThinking}
+            aria-label="Send message"
             style={{ width:42, height:42, borderRadius:12, border:'none', cursor:input.trim()&&!isThinking?'pointer':'not-allowed', background:input.trim()&&!isThinking?'linear-gradient(135deg,#00d4ff,#7c3aed)':'rgba(255,255,255,0.06)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, flexShrink:0, transition:'all 0.2s', opacity:input.trim()&&!isThinking?1:0.4 }}
           >
             {isThinking ? <div style={{ width:16, height:16, border:'2px solid rgba(255,255,255,0.3)', borderTopColor:'#fff', borderRadius:'50%', animation:'spin 0.7s linear infinite' }} /> : '➤'}

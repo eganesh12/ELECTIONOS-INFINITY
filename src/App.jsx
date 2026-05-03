@@ -1,15 +1,26 @@
-import React, { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { useAuthStore } from './store/authStore'
 import { useAgentStore } from './store/agentStore'
-import AuthPage from './pages/AuthPage'
-import DashboardPage from './pages/DashboardPage'
-import TutorPage from './pages/TutorPage'
-import QuizPage from './pages/QuizPage'
-import SimulatorPage from './pages/SimulatorPage'
-import GlobePage from './pages/GlobePage'
-import ProfilePage from './pages/ProfilePage'
+import ErrorBoundary from './components/ErrorBoundary'
+
+// Lazy load pages for better efficiency / code splitting
+const AuthPage       = lazy(() => import('./pages/AuthPage'))
+const DashboardPage  = lazy(() => import('./pages/DashboardPage'))
+const TutorPage      = lazy(() => import('./pages/TutorPage'))
+const QuizPage       = lazy(() => import('./pages/QuizPage'))
+const SimulatorPage  = lazy(() => import('./pages/SimulatorPage'))
+const GlobePage      = lazy(() => import('./pages/GlobePage'))
+const ProfilePage    = lazy(() => import('./pages/ProfilePage'))
+
+function PageLoader() {
+  return (
+    <div role="status" aria-label="Loading page" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#020408' }}>
+      <div style={{ width: 32, height: 32, border: '3px solid rgba(0,212,255,0.2)', borderTopColor: '#00d4ff', borderRadius: '50%', animation: 'spin 0.7s linear infinite' }} />
+    </div>
+  )
+}
 
 function Guard({ children }) {
   const auth = useAuthStore(s => s.isAuthenticated)
@@ -23,17 +34,21 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Toaster position="top-right" toastOptions={{ style:{ background:'#060d1a', color:'#f0f4ff', border:'1px solid rgba(0,212,255,0.2)' }, duration:3000 }} />
-      <Routes>
-        <Route path="/auth"      element={<AuthPage />} />
-        <Route path="/"          element={<Guard><DashboardPage /></Guard>} />
-        <Route path="/tutor"     element={<Guard><TutorPage /></Guard>} />
-        <Route path="/quiz"      element={<Guard><QuizPage /></Guard>} />
-        <Route path="/simulator" element={<Guard><SimulatorPage /></Guard>} />
-        <Route path="/globe"     element={<Guard><GlobePage /></Guard>} />
-        <Route path="/profile"   element={<Guard><ProfilePage /></Guard>} />
-        <Route path="*"          element={<Navigate to="/auth" replace />} />
-      </Routes>
+      <Toaster position="top-right" toastOptions={{ style: { background: '#060d1a', color: '#f0f4ff', border: '1px solid rgba(0,212,255,0.2)' }, duration: 3000 }} />
+      <ErrorBoundary>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/auth"      element={<AuthPage />} />
+            <Route path="/"          element={<Guard><DashboardPage /></Guard>} />
+            <Route path="/tutor"     element={<Guard><TutorPage /></Guard>} />
+            <Route path="/quiz"      element={<Guard><QuizPage /></Guard>} />
+            <Route path="/simulator" element={<Guard><SimulatorPage /></Guard>} />
+            <Route path="/globe"     element={<Guard><GlobePage /></Guard>} />
+            <Route path="/profile"   element={<Guard><ProfilePage /></Guard>} />
+            <Route path="*"          element={<Navigate to="/auth" replace />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </BrowserRouter>
   )
 }

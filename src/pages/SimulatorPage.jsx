@@ -71,6 +71,7 @@ export default function SimulatorPage() {
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             placeholder="e.g. What if the US had a parliamentary system with proportional representation?"
+            aria-label="Election scenario to simulate"
             rows={3}
             style={{ width:'100%', background:'rgba(255,255,255,0.03)', border:`1px solid ${focused?'rgba(245,158,11,0.4)':'rgba(255,255,255,0.08)'}`, borderRadius:12, padding:'13px 16px', color:'#f0f4ff', fontSize:14, outline:'none', resize:'none', marginBottom:16, transition:'border 0.2s', boxShadow:focused?'0 0 0 3px rgba(245,158,11,0.06)':'none' }}
           />

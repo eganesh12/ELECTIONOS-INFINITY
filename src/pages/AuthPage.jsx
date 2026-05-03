@@ -29,14 +29,17 @@ function ParticleCanvas() {
   return <canvas ref={ref} style={{ position: 'fixed', inset: 0, zIndex: 1, pointerEvents: 'none' }} />
 }
 
-function Field({ type = 'text', placeholder, value, onChange, icon, required }) {
+function Field({ type = 'text', placeholder, value, onChange, icon, required, id, label }) {
   const [focused, setFocused] = useState(false)
   return (
     <div style={{ position: 'relative', marginBottom: 12 }}>
-      <span style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', fontSize: 15, opacity: 0.5, zIndex: 1 }}>{icon}</span>
+      {label && <label htmlFor={id} style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' }}>{label}</label>}
+      <span aria-hidden="true" style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', fontSize: 15, opacity: 0.5, zIndex: 1 }}>{icon}</span>
       <input
+        id={id}
         type={type} placeholder={placeholder} value={value}
         onChange={onChange} required={required}
+        aria-label={label || placeholder}
         onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
         style={{
           width: '100%', padding: '13px 14px 13px 40px', borderRadius: 12,
@@ -128,11 +131,12 @@ export default function AuthPage() {
           ))}
         </div>
 
-        <form onSubmit={submit}>
-          {mode === 'signup' && <Field icon="◈" placeholder="Full Name" value={form.name} onChange={set('name')} required />}
-          <Field icon="◇" type="email" placeholder="System ID / Email" value={form.email} onChange={set('email')} required />
-          <Field icon="⌬" type="password" placeholder="Access Key" value={form.password} onChange={set('password')} required />
-          <button type="submit" disabled={loading} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#00d4ff,#7c3aed)', color: '#fff', fontSize: 13, fontWeight: 800, marginTop: 8, cursor: 'pointer', letterSpacing: 1 }}>
+        <form onSubmit={submit} aria-label={mode === 'signin' ? 'Sign in form' : 'Sign up form'}>
+          {mode === 'signup' && <Field id="name" label="Full Name" icon="◈" placeholder="Full Name" value={form.name} onChange={set('name')} required />}
+          <Field id="email" label="Email address" icon="◇" type="email" placeholder="System ID / Email" value={form.email} onChange={set('email')} required />
+          <Field id="password" label="Password" icon="⌬" type="password" placeholder="Access Key" value={form.password} onChange={set('password')} required />
+          {mode === 'signup' && <Field id="confirm" label="Confirm password" icon="⌬" type="password" placeholder="Confirm Access Key" value={form.confirm} onChange={set('confirm')} required />}
+          <button type="submit" disabled={loading} aria-busy={loading} style={{ width: '100%', padding: '15px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg,#00d4ff,#7c3aed)', color: '#fff', fontSize: 13, fontWeight: 800, marginTop: 8, cursor: 'pointer', letterSpacing: 1 }}>
             {loading ? 'INITIALIZING...' : mode === 'signin' ? 'AUTHORIZE SESSION' : 'CREATE PROFILE'}
           </button>
         </form>

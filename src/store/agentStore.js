@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import axios from 'axios'
 import axiosRetry from 'axios-retry'
 
-const API_KEY = 'AIzaSyCICIkMPYRlpQIFy_0anti-WWnOKg68lGg'
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`
 
 // Configure exponential backoff for 429 Rate Limit errors

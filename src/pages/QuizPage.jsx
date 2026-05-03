@@ -176,7 +176,10 @@ export default function QuizPage() {
                   const correct = revealed && isCorrect(opt)
                   const wrong = revealed && opt===selected && !correct
                   return (
-                    <button key={i} className="opt-btn" onClick={() => answer(opt)} disabled={revealed} style={{ padding:'14px 20px', borderRadius:13, textAlign:'left', border:`1px solid ${s.border}`, background:s.bg, color:s.color, cursor:revealed?'default':'pointer', fontSize:14, fontWeight:500, display:'flex', alignItems:'center', gap:12, transition:'all 0.2s' }}>
+                    <button key={i} className="opt-btn" onClick={() => answer(opt)} disabled={revealed}
+                      aria-pressed={selected === opt}
+                      aria-label={`Option ${opt.trim()[0]}: ${opt.replace(/^[A-D]\)\s*/i,'')}`}
+                      style={{ padding:'14px 20px', borderRadius:13, textAlign:'left', border:`1px solid ${s.border}`, background:s.bg, color:s.color, cursor:revealed?'default':'pointer', fontSize:14, fontWeight:500, display:'flex', alignItems:'center', gap:12, transition:'all 0.2s' }}>
                       <span style={{ width:28, height:28, borderRadius:'50%', background:'rgba(255,255,255,0.06)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, fontWeight:800, flexShrink:0, border:`1px solid ${s.border}` }}>
                         {correct ? '✅' : wrong ? '❌' : opt.trim()[0]}
                       </span>
