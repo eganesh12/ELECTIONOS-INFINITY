@@ -1,4 +1,4 @@
 @echo off
 set CLOUDSDK_PYTHON=C:\Users\egane\AppData\Local\Programs\Python\Python311\python.exe
 "%CLOUDSDK_PYTHON%" "C:\Users\egane\AppData\Local\Google\Cloud SDK\google-cloud-sdk\lib\gcloud.py" config set account eganesh7997@gmail.com
-"%CLOUDSDK_PYTHON%" "C:\Users\egane\AppData\Local\Google\Cloud SDK\google-cloud-sdk\lib\gcloud.py" run deploy electionos --source . --region us-central1 --allow-unauthenticated --port 8080 --project electionos-infinity-495213 --quiet
+"%CLOUDSDK_PYTHON%" "C:\Users\egane\AppData\Local\Google\Cloud SDK\google-cloud-sdk\lib\gcloud.py" run deploy electionos --source . --region us-central1 --allow-unauthenticated --port 8080 --project electionos-infinity-495213 --quiet --set-build-env-vars VITE_GEMINI_API_KEY=AIzaSyCICIkMPYRlpQIFy_0anti-WWnOKg68lGg,VITE_FIREBASE_API_KEY=AIzaSyDL1Ju0uZZOH8rTOdATDxqmZbzRBi0l3E4,VITE_FIREBASE_AUTH_DOMAIN=electionos-infinity.firebaseapp.com,VITE_FIREBASE_PROJECT_ID=electionos-infinity,VITE_FIREBASE_STORAGE_BUCKET=electionos-infinity.firebasestorage.app,VITE_FIREBASE_MESSAGING_SENDER_ID=952523561186,VITE_FIREBASE_APP_ID=1:952523561186:web:6b8b64008f6c83faf566bb
