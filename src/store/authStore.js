@@ -26,6 +26,11 @@ const DEMO_PROFILE = {
   isDemo: true,
 }
 
+/**
+ * Creates or retrieves a Firestore user profile.
+ * @param {import('firebase/auth').User} user - Firebase auth user object
+ * @returns {Promise<Object>} User profile data
+ */
 async function upsertProfile(user) {
   const ref = doc(db, 'users', user.uid)
   const snap = await getDoc(ref)
@@ -135,6 +140,11 @@ export const useAuthStore = create((set, get) => ({
   clearError: () => set({ error: null }),
 }))
 
+/**
+ * Maps Firebase auth error codes to user-friendly messages.
+ * @param {string} code - Firebase error code
+ * @returns {string} Human-readable error message
+ */
 function friendlyError(code) {
   const map = {
     'auth/user-not-found': 'No account found with this email.',

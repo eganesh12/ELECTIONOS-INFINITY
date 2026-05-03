@@ -14,6 +14,11 @@ axiosRetry(axios, {
   }
 });
 
+/**
+ * Sends a prompt to the Gemini API and returns the text response.
+ * @param {string} prompt - The prompt to send
+ * @returns {Promise<string>} AI-generated response text
+ */
 const ask = async (prompt) => {
   const r = await axios.post(URL, {
     contents: [{ parts: [{ text: prompt }] }],
@@ -24,6 +29,11 @@ const ask = async (prompt) => {
   return r.data?.candidates?.[0]?.content?.parts?.[0]?.text || ''
 }
 
+/**
+ * Safely extracts and parses a JSON object from a string.
+ * @param {string} text - Raw text potentially containing JSON
+ * @returns {Object|null} Parsed object or null if parsing fails
+ */
 const parseJSON = (text) => {
   try { const m = text.match(/\{[\s\S]*\}/); return m ? JSON.parse(m[0]) : null } catch { return null }
 }

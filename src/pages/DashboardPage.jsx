@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Layout from '../components/Layout'
 import { useAuthStore } from '../store/authStore'
@@ -34,7 +34,7 @@ const AGENTS = [
   { name: 'Safety Guardian',     icon: ShieldCheck, color: '#ec4899' },
 ]
 
-function StatCard({ icon: Icon, label, value, color, delay }) {
+const StatCard = memo(function StatCard({ icon: Icon, label, value, color, delay }) {
   return (
     <div className="fade-up glass" style={{
       padding: '24px', borderRadius: 20,
@@ -58,13 +58,15 @@ function StatCard({ icon: Icon, label, value, color, delay }) {
       <div style={{ fontSize: 11, color: '#64748b', marginTop: 4, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1.5 }}>{label}</div>
     </div>
   )
-}
+})
 
 export default function DashboardPage() {
   const nav = useNavigate()
   const { user, userProfile } = useAuthStore()
   const { metrics } = useAgentStore()
   const [hoveredCard, setHoveredCard] = useState(null)
+
+  const handleNav = useCallback((path) => nav(path), [nav])
 
   const hour = new Date().getHours()
   const greet = hour < 5 ? 'Good night' : hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
@@ -120,7 +122,7 @@ export default function DashboardPage() {
           {CARDS.map(({ path, icon: Icon, label, desc, color, glow }) => (
             <button
               key={path}
-              onClick={() => nav(path)}
+              onClick={() => handleNav(path)}
               onMouseEnter={() => setHoveredCard(path)}
               onMouseLeave={() => setHoveredCard(null)}
               className="fade-up"

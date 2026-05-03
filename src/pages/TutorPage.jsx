@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import Layout from '../components/Layout'
 import { useAgentStore } from '../store/agentStore'
 import { useAuthStore } from '../store/authStore'
@@ -55,13 +55,7 @@ export default function TutorPage() {
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior:'smooth' }) }, [messages, isThinking])
 
-  const handleSend = async () => {
-    const msg = input.trim()
-    if (!msg || isThinking) return
-    await quickSend(msg)
-  }
-
-  const quickSend = async (msg) => {
+  const quickSend = useCallback(async (msg) => {
     try {
       const userName = userProfile?.displayName || user?.displayName || 'Citizen'
       setInput('')
@@ -71,7 +65,13 @@ export default function TutorPage() {
     } catch (err) {
       console.error("Failed to send message:", err)
     }
-  }
+  }, [userProfile, user, send, updateXP])
+
+  const handleSend = useCallback(async () => {
+    const msg = input.trim()
+    if (!msg || isThinking) return
+    await quickSend(msg)
+  }, [input, isThinking, quickSend])
 
   return (
     <Layout>

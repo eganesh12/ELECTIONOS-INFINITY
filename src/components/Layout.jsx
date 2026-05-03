@@ -1,7 +1,8 @@
-import { useMemo } from 'react'
+import { useMemo, memo } from 'react'
+import PropTypes from 'prop-types'
 import Sidebar from './Sidebar'
 
-const CosmicBackground = () => {
+const CosmicBackground = memo(function CosmicBackground() {
   const stars = useMemo(() =>
     Array.from({ length: 100 }, (_, i) => ({
       id: i,
@@ -32,7 +33,7 @@ const CosmicBackground = () => {
       ))}
     </div>
   )
-}
+})
 
 export default function Layout({ children }) {
   return (
@@ -57,3 +58,5 @@ export default function Layout({ children }) {
     </div>
   )
 }
+
+Layout.propTypes = { children: PropTypes.node.isRequired }
